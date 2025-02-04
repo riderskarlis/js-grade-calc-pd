@@ -35,6 +35,7 @@
     <button id="calculate-btn">Aprēķināt vērtējumu</button>
 
     <div id="result"></div>
+    <div id="history"></div>
 
     <script>
       const nameInput = document.getElementById("name");
@@ -42,6 +43,7 @@
       const maxPointsInput = document.getElementById("max-points");
       const gradingSchemeSelect = document.getElementById("grading-scheme");
       const resultDiv = document.getElementById("result");
+      const historyDiv = document.getElementById("history");
       const calculateBtn = document.getElementById("calculate-btn");
 
       function handleClick() {
@@ -49,6 +51,7 @@
         let points = parseFloat(pointsInput.value);
         let maxPoints = parseFloat(maxPointsInput.value);
         let gradingScheme = gradingSchemeSelect.value;
+        let history = [];
 
         if (points < 0 || points > maxPoints) {
           resultDiv.innerHTML =
@@ -62,10 +65,17 @@
 
         if (gradingScheme == "percentage" && grade == "") {
           grade = calculateResult(points, maxPoints);
+          history.push(
+            `Vārds: ${name}, punkti: ${points}, max punkti: ${maxPoints}, ${grade}`
+          );
         } else if (gradingScheme == "letter" && grade == "") {
           grade = calculateLetterResult(points, maxPoints);
+          history.push(
+            `Vārds: ${name}, punkti: ${points}, max punkti: ${maxPoints}, ${grade}`
+          );
         }
 
+        historyDiv.innerHTML += history + "</br>";
         resultDiv.innerHTML = grade;
       }
 
