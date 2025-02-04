@@ -46,8 +46,8 @@
 
       function handleClick() {
         let name = nameInput.value;
-        let points = parseFloat(pointsInput);
-        let maxPoints = parseFloat(maxPointsInput);
+        let points = parseFloat(pointsInput.value);
+        let maxPoints = parseFloat(maxPointsInput.value);
         let gradingScheme = gradingSchemeSelect.value;
 
         // Validate inputs
@@ -62,18 +62,19 @@
           return;
         }
 
-        const grade = "";
-        if (gradingScheme == "letter") {
-          const percentage = (points / maxPoints) * 100;
+        let grade = "";
+        if (gradingScheme == "percentage") {
+          let percentage = (points / maxPoints) * 100;
           grade = `Jūsu procentuālā vērtība ir: ${percentage.toFixed(2)}%`;
-        } else if (gradingScheme == "percentage") {
-          if (points >= 90) {
+        } else if (gradingScheme == "letter") {
+          let percentage = (points / maxPoints) * 100;
+          if (percentage >= 90) {
             grade = "Jūsu burtu vērtējums ir: A";
-          } else if (points >= 80) {
+          } else if (percentage >= 80) {
             grade = "Jūsu burtu vērtējums ir: B";
-          } else if (points >= 70) {
+          } else if (percentage >= 70) {
             grade = "Jūsu burtu vērtējums ir: C";
-          } else if (points >= 60) {
+          } else if (percentage >= 60) {
             grade = "Jūsu burtu vērtējums ir: D";
           } else {
             grade = "Jūsu burtu vērtējums ir: F";
