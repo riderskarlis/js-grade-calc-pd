@@ -68,14 +68,15 @@
           history.push(
             `Vārds: ${name}, punkti: ${points}, max punkti: ${maxPoints}, ${grade}`
           );
+          historyDiv.innerHTML += history + "</br>";
         } else if (gradingScheme == "letter" && grade == "") {
           grade = calculateLetterResult(points, maxPoints);
           history.push(
             `Vārds: ${name}, punkti: ${points}, max punkti: ${maxPoints}, ${grade}`
           );
+          historyDiv.innerHTML += history + "</br>";
         }
 
-        historyDiv.innerHTML += history + "</br>";
         resultDiv.innerHTML = grade;
       }
 
