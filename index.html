@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="lv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grade Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      #result {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Grade Calculator</h1>
+    <label for="name">Vārds:</label>
+    <input type="text" id="name" required /><br /><br />
+
+    <label for="points">Iegūtie punkti:</label>
+    <input type="number" id="points" required /><br /><br />
+
+    <label for="max-points">Maksimālais punktu skaits:</label>
+    <input type="number" id="max-points" required /><br /><br />
+
+    <label for="grading-scheme">Vērtēšanas shēma:</label>
+    <select id="grading-scheme">
+      <option value="percentage">Procentuālā vērtība (0-100)</option>
+      <option value="letter">Burtu vērtējums (A, B, C utt.)</option></select
+    ><br /><br />
+
+    <button id="calculate-btn">Aprēķināt vērtējumu</button>
+
+    <script>
+      const calculateBtn = document.getElementById("calculate-btn");
+      const nameInput = document.getElementById("name");
+      const maxPointsInput = document.getElementById("max-points");
+      const gradingSchemeSelect = document.getElementById("grading-scheme");
+      const resultDiv = document.getElementById("result");
+
+      function handleClick() {
+        const name = nameInput.value;
+        const points = parseFloat(pointsInput);
+        const maxPoints = parseFloat(maxPointsInput);
+        const gradingScheme = gradingSchemeSelect.value;
+
+        // Validate inputs
+        if (!name || isNaN(points) || isNaN(maxPoints) || maxPoints <= 0) {
+          resultDiv.innerHTML = "Lūdzu, aizpildiet visus laukus pareizi.";
+          return;
+        }
+        if (points < 0 || points > maxPoints) {
+          resultDiv.innerHTML =
+            "Iegūtie punkti nedrīkst pārsniegt maksimālos punktus.";
+          return;
+        }
+
+        const grade = "";
+        if (gradingScheme === "letter") {
+          const percentage = (points / maxPoints) * 100;
+          grade = `Jūsu procentuālā vērtība ir: ${percentage.toFixed(2)}%`;
+        } else if (gradingScheme === "percentage") {
+          if (points >= 90) {
+            grade = "Jūsu burtu vērtējums ir: A";
+          } else if (points >= 80) {
+            grade = "Jūsu burtu vērtējums ir: B";
+          } else if (points >= 70) {
+            grade = "Jūsu burtu vērtējums ir: C";
+          } else if (points >= 60) {
+            grade = "Jūsu burtu vērtējums ir: D";
+          } else {
+            grade = "Jūsu burtu vērtējums ir: F";
+          }
+        }
+
+        resultDiv.innerHTML = grade;
+      }
+
+      calculateBtn.addEventListener("click", handleClick());
+    </script>
+  </body>
+</html>
