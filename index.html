@@ -45,14 +45,15 @@
       const resultDiv = document.getElementById("result");
 
       function handleClick() {
-        const name = nameInput.value;
-        const points = parseFloat(pointsInput);
-        const maxPoints = parseFloat(maxPointsInput);
-        const gradingScheme = gradingSchemeSelect.value;
+        let name = nameInput.value;
+        let points = parseFloat(pointsInput);
+        let maxPoints = parseFloat(maxPointsInput);
+        let gradingScheme = gradingSchemeSelect.value;
 
         // Validate inputs
-        if (!name || isNaN(points) || isNaN(maxPoints) || maxPoints <= 0) {
+        if (!name && isNaN(points) && isNaN(maxPoints) && maxPoints <= 0) {
           resultDiv.innerHTML = "Lūdzu, aizpildiet visus laukus pareizi.";
+          console.log(1);
           return;
         }
         if (points < 0 || points > maxPoints) {
@@ -61,11 +62,11 @@
           return;
         }
 
-        const grade = "";
-        if (gradingScheme === "letter") {
+        let grade = "";
+        if (gradingScheme == "letter") {
           const percentage = (points / maxPoints) * 100;
           grade = `Jūsu procentuālā vērtība ir: ${percentage.toFixed(2)}%`;
-        } else if (gradingScheme === "percentage") {
+        } else if (gradingScheme == "percentage") {
           if (points >= 90) {
             grade = "Jūsu burtu vērtējums ir: A";
           } else if (points >= 80) {
