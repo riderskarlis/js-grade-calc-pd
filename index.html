@@ -50,12 +50,6 @@
         let maxPoints = parseFloat(maxPointsInput.value);
         let gradingScheme = gradingSchemeSelect.value;
 
-        // Validate inputs
-        if (!name && isNaN(points) && isNaN(maxPoints) && maxPoints <= 0) {
-          resultDiv.innerHTML = "Lūdzu, aizpildiet visus laukus pareizi.";
-          console.log(1);
-          return;
-        }
         if (points < 0 || points > maxPoints) {
           resultDiv.innerHTML =
             "Iegūtie punkti nedrīkst pārsniegt maksimālos punktus.";
@@ -63,25 +57,45 @@
         }
 
         let grade = "";
-        if (gradingScheme == "percentage") {
-          let percentage = (points / maxPoints) * 100;
-          grade = `Jūsu procentuālā vērtība ir: ${percentage.toFixed(2)}%`;
-        } else if (gradingScheme == "letter") {
-          let percentage = (points / maxPoints) * 100;
-          if (percentage >= 90) {
-            grade = "Jūsu burtu vērtējums ir: A";
-          } else if (percentage >= 80) {
-            grade = "Jūsu burtu vērtējums ir: B";
-          } else if (percentage >= 70) {
-            grade = "Jūsu burtu vērtējums ir: C";
-          } else if (percentage >= 60) {
-            grade = "Jūsu burtu vērtējums ir: D";
-          } else {
-            grade = "Jūsu burtu vērtējums ir: F";
-          }
+
+        grade = validateInput(name, points, maxPoints);
+
+        if (gradingScheme == "percentage" && grade == "") {
+          grade = calculateResult(points, maxPoints);
+        } else if (gradingScheme == "letter" && grade == "") {
+          grade = calculateLetterResult(points, maxPoints);
         }
 
         resultDiv.innerHTML = grade;
+      }
+
+      function validateInput(name, points, maxPoints) {
+        // Validate inputs
+        if (!name || isNaN(points) || isNaN(maxPoints) || maxPoints <= 0) {
+          return "Lūdzu, aizpildiet visus laukus pareizi.";
+        } else {
+          return "";
+        }
+      }
+
+      function calculateResult(points, maxPoints) {
+        let percentage = (points / maxPoints) * 100;
+        return `Jūsu procentuālā vērtība ir: ${percentage.toFixed(2)}%`;
+      }
+
+      function calculateLetterResult(points, maxPoints) {
+        let percentage = (points / maxPoints) * 100;
+        if (percentage >= 90) {
+          return "Jūsu burtu vērtējums ir: A";
+        } else if (percentage >= 80) {
+          return "Jūsu burtu vērtējums ir: B";
+        } else if (percentage >= 70) {
+          return "Jūsu burtu vērtējums ir: C";
+        } else if (percentage >= 60) {
+          return "Jūsu burtu vērtējums ir: D";
+        } else {
+          return "Jūsu burtu vērtējums ir: F";
+        }
       }
 
       calculateBtn.addEventListener("click", handleClick);
